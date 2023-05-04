@@ -29,8 +29,13 @@ Usage of ./ezsmtp:
   -t Email
         Email Receipient`
 ```
+Building
 
-
+```
+$ git clone https://github.com/ktpx/ezsmtp.git
+$ cd ezsmtp
+$ go build ezsmtp.go
+```
 
 
 
