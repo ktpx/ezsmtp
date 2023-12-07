@@ -1,6 +1,7 @@
-//
+//*******************************************
 //  EZSMTP -- easy smtp mail forwarder
-//
+//  
+//*******************************************
 
 package main
 
@@ -9,6 +10,8 @@ import (
 	"fmt"
 	"log"
 	"net/smtp"
+	"bufio"
+	"os"
 )
 
 // Command line options
@@ -34,11 +37,24 @@ func init() {
 	flag.StringVar(&opt.Sender, "f", "ezsmtp@localhost", "`Sender` email")
 }
 
+// Read from stdin and return string
+func readStdin() string {
+	var s string
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		s = fmt.Sprintf("%s%s", s, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		log.Println(err)
+	}
+	return s
+}
+
 func main() {
 
 	flag.Parse()
 
-    // TODO: add auth
+        // TODO: add auth
 	// Set up authentication information.
 	// auth := smtp.PlainAuth("", "user@example.com", "password", "mail.example.com")
 	// Connect to the server, authenticate, set the sender and recipient,
@@ -48,8 +64,8 @@ func main() {
 		log.Fatal("No recipient specified.")
 	}
 	if len(opt.Body) == 0 {
-		log.Fatal("No message specified.")
-	}	
+	  opt.Body = readStdin()
+	}
 	to := []string{opt.To}
 	header := fmt.Sprintf("To: %s\r\nSubject: %s\r\n\r\n%s", opt.To, opt.Subject, opt.Body)
 	msg := []byte(header)
