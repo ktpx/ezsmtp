@@ -8,6 +8,8 @@ type admin emails via local private smtp servers.
 
 ```
 $ ezsmtp -m "testing" -t user@example.org -f sysadm@example.org -cc admin@other.org
+
+$ echo testing | ezsmtp -t user@example.org -s "testing email" -h smtp.server.local
 ```
 
 Usage
