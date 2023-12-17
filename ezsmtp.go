@@ -1,7 +1,9 @@
-//*******************************************
-//  EZSMTP -- easy smtp mail forwarder
-//  
-//*******************************************
+/*******************************************
+*
+*  EZSMTP -- easy smtp mail sender
+*  jinxd
+* 
+*******************************************/
 
 package main
 
@@ -42,7 +44,7 @@ func readStdin() string {
 	var s string
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		s = fmt.Sprintf("%s%s", s, scanner.Text())
+		s = fmt.Sprintf("%s%s\n", s, scanner.Text())
 	}
 	if err := scanner.Err(); err != nil {
 		log.Println(err)
